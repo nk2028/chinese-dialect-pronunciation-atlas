@@ -1,10 +1,12 @@
-FROM python:3.11-alpine
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-WORKDIR /app
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
+FROM archlinux:latest
+RUN pacman -Syu --noconfirm git python python-pip && \
+pacman -Sc --noconfirm && \
+useradd --create-home appuser
+WORKDIR /home/appuser/app
 COPY . .
-RUN chown -R appuser:appgroup /app
-EXPOSE 8080
+RUN chown -R appuser:appuser /home/appuser/app
 USER appuser
+RUN pip install -r requirements.txt
+RUN ./build.sh
+EXPOSE 8080
 CMD [ "python", "main.py" ]

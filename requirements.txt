@@ -1,1 +1,8 @@
 cherrypy
+
+# from MCPDict
+openpyxl
+opencc>=1.1.6
+xlrd
+docx
+python-docx
