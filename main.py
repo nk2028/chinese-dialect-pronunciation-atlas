@@ -32,11 +32,7 @@ def 構建():
 
 class Server:
     def __init__(self):
-        original_db = sqlite3.connect('file:data/mcpdict.db?mode=ro', uri=True)
-        db = sqlite3.connect(':memory:', check_same_thread=False)  # we are safe because we only use the database in a read-only manner
-        original_db.backup(db)
-        original_db.close()
-        self.db = db
+        self.db = sqlite3.connect('file:data/mcpdict.db?mode=ro', uri=True, check_same_thread=False)  # we are safe because we only use the database in a read-only manner
 
     @cherrypy.expose
     def query(self, string: str) -> dict:
