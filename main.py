@@ -1,5 +1,6 @@
 import cherrypy
 import csv
+import json
 import sqlite3
 
 def 構建():
@@ -38,7 +39,6 @@ class Server:
         self.db = db
 
     @cherrypy.expose
-    @cherrypy.tools.json_out()
     def query(self, string: str) -> dict:
         if not string:
             return []
@@ -60,7 +60,7 @@ class Server:
         results = sorted(results, key=lambda result: 漢字到idx[result[漢字_column]])
         字頭們 = [result[漢字_column] for result in results]
 
-        return [('', *字頭們)] + sorted(
+        res = [('', *字頭們)] + sorted(
             ((
                 簡稱, *簡稱到分區與顏色[簡稱], *字音們)
                 for 簡稱, *字音們
@@ -70,11 +70,21 @@ class Server:
             key=lambda 簡稱_rest: 簡稱到排序[簡稱_rest[0]]
         )
 
+        output = json.dumps(res, ensure_ascii=False)
+        cherrypy.response.headers['Content-Type'] = 'application/json'
+        cherrypy.response.headers['Access-Control-Allow-Origin'] = '*'
+        cherrypy.response.headers['Access-Control-Allow-Headers'] = 'content-type'
+        cherrypy.response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        cherrypy.response.headers['Access-Control-Allow-Credentials'] = 'true'
+        return output
+
 if __name__ == '__main__':
     cherrypy.config.update({
         'environment': 'production',
         'log.screen': False,
         'server.socket_host': '0.0.0.0',
+        'server.socket_port': 8080,
         'show_tracebacks': False,
+        'tools.encode.text_only': False,
     })
     cherrypy.quickstart(Server())
