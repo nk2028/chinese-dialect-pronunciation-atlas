@@ -35,6 +35,21 @@ class Server:
         self.db = sqlite3.connect('file:data/mcpdict.db?mode=ro', uri=True, check_same_thread=False)  # we are safe because we only use the database in a read-only manner
 
     @cherrypy.expose
+    def index(self):
+        raise cherrypy.HTTPRedirect('https://nk2028.shn.hk/hdqt/')
+
+    @cherrypy.expose
+    def default(self, *args, **kwargs):
+        message = {'錯誤': '請求的資源不存在'}
+        cherrypy.response.status = 404
+        cherrypy.response.headers['Content-Type'] = 'application/json'
+        cherrypy.response.headers['Access-Control-Allow-Origin'] = '*'
+        cherrypy.response.headers['Access-Control-Allow-Headers'] = 'content-type'
+        cherrypy.response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        cherrypy.response.headers['Access-Control-Allow-Credentials'] = 'true'
+        return json.dumps(message, ensure_ascii=False)
+
+    @cherrypy.expose
     def query(self, string: str) -> dict:
         if not string:
             return []
@@ -66,13 +81,12 @@ class Server:
             key=lambda 簡稱_rest: 簡稱到排序[簡稱_rest[0]]
         )
 
-        output = json.dumps(res, ensure_ascii=False)
         cherrypy.response.headers['Content-Type'] = 'application/json'
         cherrypy.response.headers['Access-Control-Allow-Origin'] = '*'
         cherrypy.response.headers['Access-Control-Allow-Headers'] = 'content-type'
         cherrypy.response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         cherrypy.response.headers['Access-Control-Allow-Credentials'] = 'true'
-        return output
+        return json.dumps(res, ensure_ascii=False)
 
 if __name__ == '__main__':
     cherrypy.config.update({
