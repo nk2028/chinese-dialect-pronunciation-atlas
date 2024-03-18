@@ -6,7 +6,7 @@ The Chinese Dialect Pronunciation Atlas (漢字音典, HDQT) is a comprehensive 
 
 ## Design
 
-The design of HDQT is divided into three parts: data source, frontend, and backend. The data is located at [nk2028/MCPDict](https://github.com/nk2028/MCPDict), the frontend is at [nk2028/hdqt](https://github.com/nk2028/hdqt), and this repository is the backend. The data source is the original MCPDict project, and the main part of this project is the Dockerfile. During the building of the Docker image, the MCPDict's build script is executed, and then the backend server is started to provide APIs for use by the frontend.
+The design of HDQT is divided into three parts: data source, frontend, and backend. The data is located at [nk2028/MCPDict](https://github.com/nk2028/MCPDict), the frontend is at [nk2028/hdqt](https://github.com/nk2028/hdqt), and this repository is the backend. The data source is the original MCPDict project, and the main part of this project is the Dockerfile. During the building of the Docker image, the MCPDict's build script is executed, and then the backend server is started to provide APIs for use by the frontend. The server is deployed on Google Cloud Run.
 
 ---
 
@@ -18,4 +18,4 @@ The design of HDQT is divided into three parts: data source, frontend, and backe
 
 ## 設計
 
-HDQT 的設計分為數據源、前端和後端三部分，數據位於 [nk2028/MCPDict](https://github.com/nk2028/MCPDict)，前端位於 [nk2028/hdqt](https://github.com/nk2028/hdqt)，而本倉庫是後端。數據源即原始的 MCPDict 專案，本專案的主要部分為 Dockerfile，在 Docker 鏡像構建時執行 MCPDict 的構建腳本，然後啓動後端伺服器提供 API，供前端使用。
+HDQT 的設計分為數據源、前端和後端三部分，數據位於 [nk2028/MCPDict](https://github.com/nk2028/MCPDict)，前端位於 [nk2028/hdqt](https://github.com/nk2028/hdqt)，而本倉庫是後端。數據源即原始的 MCPDict 專案，本專案的主要部分為 Dockerfile，在 Docker 鏡像構建時執行 MCPDict 的構建腳本，然後啓動後端伺服器提供 API，供前端使用。伺服器部署於 Google Cloud Run。
