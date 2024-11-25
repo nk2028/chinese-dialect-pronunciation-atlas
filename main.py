@@ -73,10 +73,10 @@ class Server:
 
         res = [('', *字頭們)] + sorted(
             ((
-                簡稱, *簡稱到分區與顏色[簡稱], *字音們)
+                簡稱, *簡稱到分區與顏色[簡稱], *[字音 or '' for 字音 in 字音們])
                 for 簡稱, *字音們
                 in zip(column_names, *results)
-                if 簡稱 in 是方言的簡稱們 and all(字音 for 字音 in 字音們)
+                if 簡稱 in 是方言的簡稱們 and any(字音 for 字音 in 字音們)
             ),
             key=lambda 簡稱_rest: 簡稱到排序[簡稱_rest[0]]
         )
